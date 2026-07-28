@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Fonte padrão do projeto — troque depois pela que combinar com a identidade dele */
+:root {
+  --font-body: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+}

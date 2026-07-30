@@ -16,7 +16,12 @@
       rel="stylesheet"
     />
   </head>
-  <body class="bg-black text-white antialiased">
+  <body class="antialiased">
+    <!-- Grão sutil de fundo -->
+    <div class="grain"></div>
+    <!-- Barra de progresso de leitura -->
+    <div id="progress-bar"></div>
+
     <div id="app">
       <!-- NAV -->
       <header
@@ -27,9 +32,9 @@
         </a>
 
         <nav class="hidden md:flex items-center gap-8 text-sm uppercase tracking-wide">
-          <a href="#sobre" class="hover:opacity-60 transition-opacity">Sobre</a>
-          <a href="#portfolio" class="hover:opacity-60 transition-opacity">Portfólio</a>
-          <a href="#contato" class="hover:opacity-60 transition-opacity">Contato</a>
+          <a href="#sobre" class="link-hover">Sobre</a>
+          <a href="#portfolio" class="link-hover">Portfólio</a>
+          <a href="#contato" class="link-hover">Contato</a>
         </nav>
 
         <button
@@ -44,11 +49,11 @@
       <!-- MENU MOBILE -->
       <nav
         id="menu-mobile"
-        class="hidden fixed inset-0 z-40 bg-black flex flex-col items-center justify-center gap-8 text-lg uppercase tracking-wide"
+        class="fixed inset-0 z-40 bg-black flex flex-col items-center justify-center gap-8 text-lg uppercase tracking-wide"
       >
-        <a href="#sobre" class="menu-link">Sobre</a>
-        <a href="#portfolio" class="menu-link">Portfólio</a>
-        <a href="#contato" class="menu-link">Contato</a>
+        <a href="#sobre" class="menu-link link-hover">Sobre</a>
+        <a href="#portfolio" class="menu-link link-hover">Portfólio</a>
+        <a href="#contato" class="menu-link link-hover">Contato</a>
       </nav>
 
       <!-- HERO -->
@@ -64,12 +69,26 @@
         </p>
       </section>
 
+      <!-- MANIFESTO: as linhas somem conforme rola, revelando a foto atrás -->
+      <section id="manifesto" class="relative h-[400vh]">
+        <div class="manifesto-stage">
+          <div class="manifesto-bg"></div>
+          <!-- Troque o background do .manifesto-bg (no style.css) por uma foto real do J -->
+          <div class="manifesto-lines">
+            <span data-line>Estilo não é</span>
+            <span data-line>o que você veste</span>
+            <span data-line>é o que</span>
+            <span data-line class="text-accent">as pessoas lembram</span>
+          </div>
+        </div>
+      </section>
+
       <!-- SOBRE -->
       <section id="sobre" class="max-w-3xl mx-auto px-6 py-24 md:py-32">
         <h2 class="text-xs uppercase tracking-widest text-white/50 mb-6">
-          Sobre
+          01 — Sobre
         </h2>
-        <p class="text-xl md:text-2xl leading-relaxed">
+        <p class="reveal text-xl md:text-2xl leading-relaxed">
           A moda é a linguagem que escolhi para contar histórias.
           Entre conceito, composição e direção,
           desenvolvo imagens que unem personalidade,
@@ -80,54 +99,66 @@
       <!-- PORTFÓLIO -->
       <section id="portfolio" class="px-6 md:px-12 py-24 md:py-32">
         <h2 class="text-xs uppercase tracking-widest text-white/50 mb-10 text-center">
-          Portfólio
+          02 — Portfólio
         </h2>
 
         <div class="max-w-2xl mx-auto space-y-4 md:space-y-6">
           <!-- Cada bloco é um trabalho. Troque o src pela foto real quando chegar. -->
 
           <!-- Foto grande -->
-          <div class="rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
-            <img
-              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
-              alt="Trabalho 1"
-              loading="lazy"
-              decoding="async"
-              class="w-full h-full object-cover"
-            />
+          <div>
+            <div class="reveal rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                alt="Trabalho 1"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <p class="mt-2 text-[10px] uppercase tracking-widest text-white/40">Trabalho 01</p>
           </div>
 
           <!-- Par de fotos menores -->
           <div class="grid grid-cols-2 gap-4 md:gap-6">
-            <div class="rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
-              <img
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
-                alt="Trabalho 2"
-                loading="lazy"
-                decoding="async"
-                class="w-full h-full object-cover"
-              />
+            <div>
+              <div class="reveal rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
+                <img
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                  alt="Trabalho 2"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <p class="mt-2 text-[10px] uppercase tracking-widest text-white/40">Trabalho 02</p>
             </div>
-            <div class="rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
-              <img
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
-                alt="Trabalho 3"
-                loading="lazy"
-                decoding="async"
-                class="w-full h-full object-cover"
-              />
+            <div>
+              <div class="reveal rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
+                <img
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                  alt="Trabalho 3"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <p class="mt-2 text-[10px] uppercase tracking-widest text-white/40">Trabalho 03</p>
             </div>
           </div>
 
           <!-- Padrão se repete: próxima foto grande -->
-          <div class="rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
-            <img
-              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
-              alt="Trabalho 4"
-              loading="lazy"
-              decoding="async"
-              class="w-full h-full object-cover"
-            />
+          <div>
+            <div class="reveal rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                alt="Trabalho 4"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <p class="mt-2 text-[10px] uppercase tracking-widest text-white/40">Trabalho 04</p>
           </div>
         </div>
       </section>
@@ -138,22 +169,22 @@
         class="min-h-[60vh] flex flex-col items-center justify-center text-center px-6 border-t border-white/10"
       >
         <h2 class="text-xs uppercase tracking-widest text-white/50 mb-6">
-          Contato
+          03 — Contato
         </h2>
         <a
           href="https://wa.me/55998289293"
           target="_blank"
           rel="noopener"
-          class="text-2xl md:text-4xl font-medium hover:opacity-60 transition-opacity"
+          class="link-hover text-2xl md:text-4xl font-medium"
         >
           Falar no WhatsApp
         </a>
 
         <div class="mt-10 flex gap-6 text-sm uppercase tracking-wide text-white/60">
-          <a href="https://www.instagram.com/jaozin.by" target="_blank" rel="noopener" class="hover:text-white transition-colors">
+          <a href="https://www.instagram.com/jaozin.by" target="_blank" rel="noopener" class="link-hover">
             Instagram
           </a>
-          <a href="#" target="_blank" rel="noopener" class="hover:text-white transition-colors">
+          <a href="#" target="_blank" rel="noopener" class="link-hover">
             Behance
           </a>
         </div>
@@ -163,6 +194,17 @@
       <footer class="px-6 py-8 text-center text-xs text-white/30 uppercase tracking-widest">
         © <span id="ano"></span> J Araujo
       </footer>
+    </div>
+
+    <!-- Detalhe fixo no canto — só aparece no desktop, pra não poluir o mobile -->
+    <div class="hidden md:block fixed bottom-6 left-6 z-40 text-[10px] uppercase tracking-widest text-white/30">
+      São Paulo — <span id="ano-canto"></span>
+    </div>
+
+    <!-- Lightbox: abre a foto do portfólio em tela cheia -->
+    <div id="lightbox">
+      <button id="lightbox-close" class="link-hover">Fechar ✕</button>
+      <img id="lightbox-img" src="" alt="" />
     </div>
 
     <script type="module" src="/src/main.js"></script>

@@ -1,10 +1,26 @@
 @import "tailwindcss";
 
-/* Fonte padrão do projeto — troque depois pela que combinar com a identidade dele */
 :root {
-  --font-body: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Anton', sans-serif;
 }
 
 body {
   font-family: var(--font-body);
+}
+
+/* Fonte de destaque, usada só no nome — cria a hierarquia forte */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400; /* Anton só existe nesse peso, já é bem "cheia" sozinha */
+}
+
+/* Efeito de crescer ao passar o mouse (desktop) ou tocar (mobile) */
+.portfolio-img img {
+  transition: transform 0.4s ease;
+}
+
+.portfolio-img:hover img,
+.portfolio-img:active img {
+  transform: scale(1.06);
 }

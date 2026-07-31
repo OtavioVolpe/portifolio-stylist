@@ -42,29 +42,16 @@ function updateProgressBar() {
   progressBar.style.width = `${progress}%`
 }
 
-// ---------- Manifesto: as linhas somem conforme a seção rola ----------
-const manifestoSection = document.getElementById('manifesto')
-const manifestoLines = manifestoSection
-  ? manifestoSection.querySelectorAll('[data-line]')
-  : []
-
-function updateManifesto() {
-  if (!manifestoSection) return
-  const rect = manifestoSection.getBoundingClientRect()
-  const scrollableDistance = rect.height - window.innerHeight
-  if (scrollableDistance <= 0) return
-
-  const scrolled = Math.min(Math.max(-rect.top, 0), scrollableDistance)
-  const progress = scrolled / scrollableDistance
-
-  manifestoLines.forEach((line, i) => {
-    const step = 1 / manifestoLines.length
-    const lineProgress = (progress - i * step) / step
-    const opacity = 1 - Math.min(Math.max(lineProgress, 0), 1)
-    line.style.opacity = opacity
-    line.style.transform = `translateY(${(1 - opacity) * -16}px)`
-  })
-}
+// ---------- Cascata de texto: Hero e Manifesto usam a mesma lógica ----------
+const cascadeObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('is-visible', entry.isIntersecting)
+    })
+  },
+  { threshold: 0.35 }
+)
+document.querySelectorAll('.cascade-reveal').forEach((el) => cascadeObserver.observe(el))
 
 // ---------- Um único listener de scroll, usando requestAnimationFrame ----------
 let ticking = false
@@ -72,7 +59,6 @@ function onScroll() {
   if (!ticking) {
     requestAnimationFrame(() => {
       updateProgressBar()
-      updateManifesto()
       ticking = false
     })
     ticking = true
@@ -80,7 +66,6 @@ function onScroll() {
 }
 window.addEventListener('scroll', onScroll, { passive: true })
 updateProgressBar()
-updateManifesto()
 
 // ---------- Lightbox: toca numa foto do portfólio e ela abre em tela cheia ----------
 const lightbox = document.getElementById('lightbox')

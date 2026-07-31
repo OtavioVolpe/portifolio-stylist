@@ -50,8 +50,8 @@ body {
    e aparece quando entra na tela (controlado via JS no main.js) */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .reveal.is-visible {
   opacity: 1;
@@ -104,18 +104,7 @@ body {
 #menu-mobile.is-open .menu-link:nth-child(2) { transition-delay: 0.1s; }
 #menu-mobile.is-open .menu-link:nth-child(3) { transition-delay: 0.15s; }
 
-/* Manifesto do Hero: a seção é bem mais alta que a tela (scroll longo),
-   mas o "palco" fica grudado (sticky) na tela toda — é isso que dá
-   a sensação de "ficar parado enquanto o texto some" */
-.manifesto-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* Manifesto do Hero: altura normal (não trava o scroll), fundo com a foto */
 .manifesto-bg {
   position: absolute;
   inset: 0;
@@ -125,15 +114,39 @@ body {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 0 24px;
 }
-.manifesto-lines span {
+.manifesto-lines .line {
   display: block;
   font-family: var(--font-display);
   font-size: clamp(1.9rem, 8vw, 4.5rem);
   text-transform: uppercase;
-  line-height: 1.1;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  line-height: 1.15;
+}
+/* Título e subtítulo do Hero, reaproveitando a mesma estrutura do manifesto */
+.manifesto-lines .line.is-title {
+  font-size: clamp(2.8rem, 13vw, 7.5rem);
+  margin-bottom: 0.75rem;
+}
+.manifesto-lines .line.is-subtitle {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(242, 242, 242, 0.5);
+}
+/* Cada palavra começa invisível/deslocada; a classe .is-visible na seção
+   dispara a entrada em cascata (--i controla o atraso de cada uma) */
+.manifesto-lines .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.cascade-reveal.is-visible .word {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: calc(var(--i) * 0.035s);
 }
 
 /* Lightbox: toca na foto do portfólio e ela abre em tela cheia, fundo preto */

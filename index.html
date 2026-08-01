@@ -56,144 +56,132 @@
         <a href="#contato" class="menu-link link-hover">Contato</a>
       </nav>
 
-      <!-- HERO: o título e o subtítulo entram em cascata, mesmo efeito do manifesto -->
-      <section id="hero" class="cascade-reveal section-gray relative min-h-screen flex items-center justify-center overflow-hidden px-6">
-        <div class="manifesto-bg"></div>
-        <!-- Troque o background do .manifesto-bg (no style.css) por uma foto real do J -->
-        <div class="manifesto-lines">
+      <!-- HERO: J Araujo entra em cascata, mesmo efeito que você curtiu -->
+      <section id="hero" class="bg-section-gray relative min-h-screen flex items-center justify-center overflow-hidden px-6">
+        <div class="manifesto-lines cascade-reveal">
           <span class="line is-title"><span class="word" style="--i:0">J</span> <span class="word" style="--i:1">Araujo</span></span>
           <span class="line is-subtitle"><span class="word" style="--i:2">Stylist</span> <span class="word" style="--i:3">•</span> <span class="word" style="--i:4">Fashion</span> <span class="word" style="--i:5">Designer</span> <span class="word" style="--i:6">&</span> <span class="word" style="--i:7">Creative</span> <span class="word" style="--i:8">Director</span></span>
         </div>
       </section>
 
       <!-- SOBRE -->
-      <section
-  id="sobre"
-  class="section-dark px-6 py-24 md:py-36"
->
-  <div class="max-w-3xl mx-auto">
-        <h2 class="cascade-reveal text-xs uppercase tracking-[0.35em] text-white/40 mb-8">
+      <section id="sobre" class="py-24 md:py-32">
+        <div class="cascade-reveal max-w-2xl mx-auto px-6">
+          <h2 class="text-xs uppercase tracking-widest text-white/50 mb-8">
+            <span class="word" style="--i:0">01</span> <span class="word" style="--i:1">—</span> <span class="word" style="--i:2">Sobre</span>
+          </h2>
 
-<span class="word" style="--i:0">01</span>
+          <p class="font-display text-3xl md:text-5xl leading-snug uppercase">
+            <span class="word" style="--i:3">A</span> <span class="word" style="--i:4">moda</span> <span class="word" style="--i:5">é</span> <span class="word" style="--i:6">a</span> <span class="word" style="--i:7">linguagem</span> <span class="word" style="--i:8">que</span> <span class="word" style="--i:9">escolhi</span> <span class="word" style="--i:10">para</span> <span class="word" style="--i:11">contar</span> <span class="word text-accent" style="--i:12">histórias.</span>
+          </p>
 
-<span class="word" style="--i:1">—</span>
-
-<span class="word" style="--i:2">SOBRE</span>
-
-</h2>
-        <p class="reveal max-w-xl text-xl md:text-3xl leading-[1.7] text-white/90">
-          A moda é a linguagem que escolhi para contar histórias.
-          Entre conceito, composição e direção,
-          desenvolvo imagens que unem personalidade,
-          autenticidade e propósito.
-        </p>
+          <p class="mt-8 text-base md:text-lg text-white/50 leading-relaxed max-w-lg">
+            <span class="word" style="--i:13">Entre</span> <span class="word" style="--i:14">conceito,</span> <span class="word" style="--i:15">composição</span> <span class="word" style="--i:16">e</span> <span class="word" style="--i:17">direção,</span> <span class="word" style="--i:18">desenvolvo</span> <span class="word" style="--i:19">imagens</span> <span class="word" style="--i:20">que</span> <span class="word" style="--i:21">unem</span> <span class="word" style="--i:22">personalidade,</span> <span class="word" style="--i:23">autenticidade</span> <span class="word" style="--i:24">e</span> <span class="word" style="--i:25">propósito.</span>
+          </p>
         </div>
       </section>
 
       <!-- PORTFÓLIO -->
-      <section
-id="portfolio"
-class="section-gray px-6 md:px-12 py-32 md:py-40">
-        <h2 class="cascade-reveal text-xs uppercase tracking-[0.35em] text-white/40 mb-14 text-center">
-          <span class="word" style="--i:0">02</span>
-
-<span class="word" style="--i:1">—</span>
-
-<span class="word" style="--i:2">PORTFÓLIO</span>
+      <section id="portfolio" class="px-6 md:px-12 py-24 md:py-32">
+        <h2 class="cascade-reveal text-xs uppercase tracking-widest text-white/50 mb-10 text-center">
+          <span class="word" style="--i:0">02</span> <span class="word" style="--i:1">—</span> <span class="word" style="--i:2">Portfólio</span>
         </h2>
 
-        <div class="max-w-2xl mx-auto space-y-4 md:space-y-6">
-          <!-- Cada bloco é um trabalho, um embaixo do outro. Troque o src pela foto real quando chegar. -->
+        <div class="max-w-2xl mx-auto space-y-20 md:space-y-32">
+          <!-- Cada bloco é um trabalho. Legenda de cima (no meio da foto) e de baixo
+               podem ter textos diferentes — edite cada uma separadamente. -->
 
           <div>
-            <div class="reveal rounded-xl overflow-hidden bg-white/[0.03] aspect-[3/4] portfolio-img">
+            <div class="reveal mx-auto w-fit max-h-[75vh] rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
               <img
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
-                alt="Trabalho 1"
+                src="/testeV3.jpeg"
+                alt="Styled for Dsantt show"
                 loading="lazy"
                 decoding="async"
                 class="w-full h-full object-cover"
               />
+              <div class="portfolio-caption">DSANTT</div>
             </div>
-            <p class="mt-2 text-[10px] uppercase tracking-widest text-white/40">Trabalho 01</p>
+            <p class="mt-2 text-center text-[10px] uppercase tracking-widest text-white/40">styled for dsantt show</p>
           </div>
 
           <div>
-            <div class="reveal rounded-xl overflow-hidden bg-white/[0.03] aspect-[3/4] portfolio-img">
+            <div class="reveal mx-auto w-fit max-h-[75vh] rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
               <img
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                src="/testeV1.jpeg"
                 alt="Trabalho 2"
                 loading="lazy"
                 decoding="async"
                 class="w-full h-full object-cover"
               />
+              <div class="portfolio-caption">Trabalho 02</div>
             </div>
-            <p class="mt-2 text-[10px] uppercase tracking-widest text-white/40">Trabalho 02</p>
+            <p class="mt-2 text-center text-[10px] uppercase tracking-widest text-white/40">Trabalho 02</p>
           </div>
 
           <div>
-            <div class="reveal rounded-xl overflow-hidden bg-white/[0.03] aspect-[3/4] portfolio-img">
+            <div class="reveal mx-auto w-fit max-h-[75vh] rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
               <img
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                src="/testeV2.jpeg"
                 alt="Trabalho 3"
                 loading="lazy"
                 decoding="async"
                 class="w-full h-full object-cover"
               />
+              <div class="portfolio-caption">Trabalho 03</div>
             </div>
-            <p class="mt-2 text-[10px] uppercase tracking-widest text-white/40">Trabalho 03</p>
+            <p class="mt-2 text-center text-[10px] uppercase tracking-widest text-white/40">Trabalho 03</p>
           </div>
 
           <!-- Próximo trabalho -->
           <div>
-            <div class="reveal rounded-xl overflow-hidden bg-white/[0.03] aspect-[3/4] portfolio-img">
+            <div class="reveal mx-auto w-fit max-h-[75vh] rounded-lg overflow-hidden bg-white/5 aspect-[3/4] portfolio-img">
               <img
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                src="/testeH1.jpeg"
                 alt="Trabalho 4"
                 loading="lazy"
                 decoding="async"
                 class="w-full h-full object-cover"
               />
+              <div class="portfolio-caption">Trabalho 04</div>
             </div>
-            <p class="reveal mt-3 text-[11px] uppercase tracking-[0.25em] text-white/35">Trabalho 04</p>
+            <p class="mt-2 text-center text-[10px] uppercase tracking-widest text-white/40">Trabalho 04</p>
           </div>
         </div>
       </section>
 
       <!-- CONTATO -->
       <section
-id="contato"
-class="section-dark min-h-[70vh] flex flex-col items-center justify-center text-center px-6 border-t border-white/10">
-        <h2 class="cascade-reveal text-xs uppercase tracking-[0.35em] text-white/40 mb-8">
-          <span class="word" style="--i:0">03</span>
-
-<span class="word" style="--i:1">—</span>
-
-<span class="word" style="--i:2">CONTATO</span>
-        </h2>
-        <a
-          href="https://wa.me/5514998289293"
-          target="_blank"
-          rel="noopener"
-          class="reveal link-hover text-3xl md:text-5xl font-medium tracking-tight"
-        >
-          Falar no WhatsApp
-        </a>
-
-        <div class="reveal mt-12 flex gap-8 text-sm uppercase tracking-[0.25em] text-white/50">
-          <a href="https://www.instagram.com/jaozin.by" target="_blank" rel="noopener" class="link-hover">
-            Instagram
+        id="contato"
+        class="min-h-[60vh] flex flex-col items-center justify-center text-center px-6 border-t border-white/10"
+      >
+        <div class="cascade-reveal">
+          <h2 class="text-xs uppercase tracking-widest text-white/50 mb-6">
+            <span class="word" style="--i:0">03</span> <span class="word" style="--i:1">—</span> <span class="word" style="--i:2">Contato</span>
+          </h2>
+          <a
+            href="https://wa.me/5514998289293"
+            target="_blank"
+            rel="noopener"
+            class="link-hover text-2xl md:text-4xl font-medium"
+          >
+            <span class="word" style="--i:3">Falar</span> <span class="word" style="--i:4">no</span> <span class="word" style="--i:5">WhatsApp</span>
           </a>
-          <a href="#" target="_blank" rel="noopener" class="link-hover">
-            Behance
-          </a>
+
+          <div class="mt-10 flex gap-6 text-sm uppercase tracking-wide text-white/60 justify-center">
+            <a href="https://www.instagram.com/jaozin.by" target="_blank" rel="noopener" class="link-hover"><span class="word" style="--i:6">Instagram</span></a>
+            <a href="#" target="_blank" rel="noopener" class="link-hover"><span class="word" style="--i:7">Behance</span></a>
+          </div>
         </div>
       </section>
 
       <!-- FOOTER -->
-      <footer
-class="section-dark px-6 py-8 text-center text-[10px] text-white/25 uppercase tracking-[0.25em]">
-        © <span id="ano"></span> J Araujo
+      <footer class="px-6 py-8 text-center text-xs text-white/30 uppercase tracking-widest">
+        <p>© <span id="ano"></span> J Araujo</p>
+        <p class="mt-2 normal-case tracking-normal text-white/20">
+          Desenvolvido por
+          <a href="https://www.instagram.com/otavio_volpe" target="_blank" rel="noopener" class="link-hover">@otavio_volpe</a>
+        </p>
       </footer>
     </div>
 

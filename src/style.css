@@ -32,18 +32,41 @@ body {
   color: var(--accent);
 }
 
-/* Fotos do portfólio: leve zoom + brilho ao passar o mouse ou tocar */
+/* Fotos do portfólio: preto e branco por padrão, ganham cor ao passar o mouse/tocar */
+.portfolio-img {
+  position: relative;
+  cursor: pointer;
+}
 .portfolio-img img {
-  transition: transform 0.4s ease, filter 0.4s ease;
-  filter: brightness(0.95);
+  transition: filter 0.5s ease;
+  filter: grayscale(1) brightness(0.9);
 }
 .portfolio-img:hover img,
 .portfolio-img:active img {
-  transform: scale(1.05);
-  filter: brightness(1.05);
+  filter: grayscale(0) brightness(1);
 }
-.portfolio-img {
-  cursor: pointer;
+
+/* Nome do trabalho, centralizado, some por padrão e aparece junto com a cor */
+.portfolio-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 16px;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.portfolio-img:hover .portfolio-caption,
+.portfolio-img:active .portfolio-caption {
+  opacity: 1;
 }
 
 /* Revelação suave: qualquer elemento com essa classe começa invisível
@@ -104,12 +127,11 @@ body {
 #menu-mobile.is-open .menu-link:nth-child(2) { transition-delay: 0.1s; }
 #menu-mobile.is-open .menu-link:nth-child(3) { transition-delay: 0.15s; }
 
-/* Manifesto do Hero: altura normal (não trava o scroll), fundo com a foto */
-.manifesto-bg {
-  position: absolute;
-  inset: 0;
-  background: #1a1a1a; /* troque por uma foto real: background-image: url(...); background-size: cover; */
+/* Fundo cinza — usado só no Hero e no Contato */
+.bg-section-gray {
+  background: #1a1a1a;
 }
+
 .manifesto-lines {
   position: relative;
   z-index: 2;
@@ -122,7 +144,7 @@ body {
   text-transform: uppercase;
   line-height: 1.15;
 }
-/* Título e subtítulo do Hero, reaproveitando a mesma estrutura do manifesto */
+/* Título e subtítulo do Hero */
 .manifesto-lines .line.is-title {
   font-size: clamp(2.8rem, 13vw, 7.5rem);
   margin-bottom: 0.75rem;
@@ -136,11 +158,12 @@ body {
   color: rgba(242, 242, 242, 0.5);
 }
 /* Cada palavra começa invisível/deslocada; a classe .is-visible na seção
-   dispara a entrada em cascata (--i controla o atraso de cada uma) */
-.manifesto-lines .word {
+   dispara a entrada em cascata (--i controla o atraso de cada uma).
+   Funciona em qualquer texto do site, não só no manifesto. */
+.word {
   display: inline-block;
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(14px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .cascade-reveal.is-visible .word {

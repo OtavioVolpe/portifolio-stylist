@@ -5,7 +5,7 @@
   --font-display: 'Anton', sans-serif;
   --bg: #0a0a0a;
   --fg: #f2f2f2;
-  --accent: #8a7bc4; /* roxo discreto — troque só essa linha pra mudar a cor de destaque do site inteiro */
+  --accent: #8a7bc4;
 }
 
 body {
@@ -14,7 +14,6 @@ body {
   color: var(--fg);
 }
 
-/* Fonte de destaque, usada só no nome e no manifesto — cria a hierarquia forte */
 .font-display {
   font-family: var(--font-display);
   font-weight: 400;
@@ -24,7 +23,6 @@ body {
   color: var(--accent);
 }
 
-/* Links com transição pra cor de destaque no hover/toque (nav, menu, redes sociais) */
 .link-hover {
   transition: color 0.3s ease;
 }
@@ -69,8 +67,6 @@ body {
   opacity: 1;
 }
 
-/* Revelação suave: qualquer elemento com essa classe começa invisível
-   e aparece quando entra na tela (controlado via JS no main.js) */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -81,7 +77,6 @@ body {
   transform: translateY(0);
 }
 
-/* Grão de fundo bem fraco — dá uma textura quase imperceptível, sem pesar o site */
 .grain {
   position: fixed;
   inset: 0;
@@ -91,7 +86,6 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Barra fininha no topo mostrando o progresso de leitura da página */
 #progress-bar {
   position: fixed;
   top: 0;
@@ -102,7 +96,6 @@ body {
   z-index: 60;
 }
 
-/* Menu mobile: some/aparece suavemente, com os links entrando em sequência */
 #menu-mobile {
   opacity: 0;
   transform: translateY(-8px);
@@ -127,7 +120,7 @@ body {
 #menu-mobile.is-open .menu-link:nth-child(2) { transition-delay: 0.1s; }
 #menu-mobile.is-open .menu-link:nth-child(3) { transition-delay: 0.15s; }
 
-/* Fundo cinza — usado só no Hero e no Contato */
+/* Fundo cinza — usado só no Hero */
 .bg-section-gray {
   background: #1a1a1a;
 }
@@ -144,7 +137,6 @@ body {
   text-transform: uppercase;
   line-height: 1.15;
 }
-/* Título e subtítulo do Hero */
 .manifesto-lines .line.is-title {
   font-size: clamp(2.8rem, 13vw, 7.5rem);
   margin-bottom: 0.75rem;
@@ -157,9 +149,6 @@ body {
   text-transform: uppercase;
   color: rgba(242, 242, 242, 0.5);
 }
-/* Cada palavra começa invisível/deslocada; a classe .is-visible na seção
-   dispara a entrada em cascata (--i controla o atraso de cada uma).
-   Funciona em qualquer texto do site, não só no manifesto. */
 .word {
   display: inline-block;
   opacity: 0;
@@ -172,7 +161,6 @@ body {
   transition-delay: calc(var(--i) * 0.035s);
 }
 
-/* Lightbox: toca na foto do portfólio e ela abre em tela cheia, fundo preto */
 #lightbox {
   position: fixed;
   inset: 0;
@@ -181,6 +169,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: auto;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -193,6 +182,8 @@ body {
   max-width: 92%;
   max-height: 85%;
   object-fit: contain;
+  cursor: zoom-in;
+  transition: transform 0.15s ease-out;
 }
 #lightbox-close {
   position: absolute;

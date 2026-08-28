@@ -169,7 +169,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: auto;
+  overflow: hidden;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -184,6 +184,15 @@ body {
   object-fit: contain;
   cursor: zoom-in;
   transition: transform 0.15s ease-out;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+#lightbox img.is-zoomed {
+  cursor: grab;
+}
+#lightbox img.is-dragging {
+  cursor: grabbing;
+  transition: none;
 }
 #lightbox-close {
   position: absolute;

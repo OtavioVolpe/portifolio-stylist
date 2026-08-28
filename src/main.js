@@ -67,6 +67,7 @@ updateProgressBar()
 const lightbox = document.getElementById('lightbox')
 const lightboxImg = document.getElementById('lightbox-img')
 const lightboxClose = document.getElementById('lightbox-close')
+lightboxImg.draggable = false
 
 document.querySelectorAll('.portfolio-img').forEach((wrapper) => {
   wrapper.addEventListener('click', () => {
@@ -74,39 +75,93 @@ document.querySelectorAll('.portfolio-img').forEach((wrapper) => {
     lightboxImg.src = img.src
     lightboxImg.alt = img.alt
     lightbox.classList.add('is-open')
-    setZoom(1)
+    resetZoom()
   })
 })
 
-let zoomLevel = 1
+// Estado do zoom/pan: escala atual e o quanto a foto está deslocada
+let scale = 1
+let panX = 0
+let panY = 0
+let isDragging = false
+let dragStartX = 0
+let dragStartY = 0
+let panStartX = 0
+let panStartY = 0
+let pointerMoved = false
 
-function setZoom(level) {
-  zoomLevel = Math.min(Math.max(level, 1), 3)
-  lightboxImg.style.transform = `scale(${zoomLevel})`
+function applyTransform() {
+  lightboxImg.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`
+  lightboxImg.classList.toggle('is-zoomed', scale > 1)
+}
+
+function resetZoom() {
+  scale = 1
+  panX = 0
+  panY = 0
+  lightboxImg.style.transformOrigin = 'center center'
+  applyTransform()
 }
 
 function closeLightbox() {
   lightbox.classList.remove('is-open')
-  setZoom(1)
+  resetZoom()
 }
 lightboxClose.addEventListener('click', closeLightbox)
 lightbox.addEventListener('click', (e) => {
   if (e.target === lightbox) closeLightbox()
 })
 
-// Rodinha do mouse controla o zoom (segurando Shift ou não, funciona igual)
+// Rodinha do mouse: zoom exatamente onde o cursor está, não no centro
 lightboxImg.addEventListener(
   'wheel',
   (e) => {
     e.preventDefault()
+    const rect = lightboxImg.getBoundingClientRect()
+    // Posição do mouse dentro da foto, em porcentagem (0% a 100%)
+    const originX = ((e.clientX - rect.left) / rect.width) * 100
+    const originY = ((e.clientY - rect.top) / rect.height) * 100
+    lightboxImg.style.transformOrigin = `${originX}% ${originY}%`
+
     const direction = e.deltaY < 0 ? 1 : -1
-    setZoom(zoomLevel + direction * 0.2)
+    scale = Math.min(Math.max(scale + direction * 0.25, 1), 4)
+
+    // Sem zoom, não faz sentido manter a foto deslocada
+    if (scale === 1) {
+      panX = 0
+      panY = 0
+    }
+    applyTransform()
   },
   { passive: false }
 )
 
-// Clicar na foto reseta o zoom (sem fechar o lightbox)
-lightboxImg.addEventListener('click', (e) => {
-  e.stopPropagation()
-  setZoom(1)
+// Clicar e arrastar: só funciona depois que já tem zoom aplicado
+lightboxImg.addEventListener('pointerdown', (e) => {
+  if (scale <= 1) return
+  isDragging = true
+  pointerMoved = false
+  dragStartX = e.clientX
+  dragStartY = e.clientY
+  panStartX = panX
+  panStartY = panY
+  lightboxImg.classList.add('is-dragging')
+  lightboxImg.setPointerCapture(e.pointerId)
+})
+
+lightboxImg.addEventListener('pointermove', (e) => {
+  if (!isDragging) return
+  const dx = e.clientX - dragStartX
+  const dy = e.clientY - dragStartY
+  if (Math.abs(dx) > 3 || Math.abs(dy) > 3) pointerMoved = true
+  panX = panStartX + dx
+  panY = panStartY + dy
+  applyTransform()
+})
+
+lightboxImg.addEventListener('pointerup', (e) => {
+  lightboxImg.classList.remove('is-dragging')
+  isDragging = false
+  // Se o mouse não se moveu, foi um clique de verdade — reseta o zoom
+  if (!pointerMoved) resetZoom()
 })

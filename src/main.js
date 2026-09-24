@@ -62,7 +62,9 @@ updateProgressBar()
 const lightbox = document.getElementById('lightbox')
 const lightboxImg = document.getElementById('lightbox-img')
 const lightboxClose = document.getElementById('lightbox-close')
-const lightboxThumbs = document.getElementById('lightbox-thumbs')
+const lightboxPrev = document.getElementById('lightbox-prev')
+const lightboxNext = document.getElementById('lightbox-next')
+const lightboxDots = document.getElementById('lightbox-dots')
 lightboxImg.draggable = false
 
 // Fotos do artista aberto no momento, e qual delas está em destaque
@@ -74,7 +76,7 @@ document.querySelectorAll('.portfolio-img').forEach((wrapper) => {
     const img = wrapper.querySelector('img')
     const galleryAttr = wrapper.dataset.gallery
     // Se o artista tem mais fotos (data-gallery), usa a lista toda.
-    // Senão, é só essa foto mesmo — sem miniaturas.
+    // Senão, é só essa foto mesmo — sem navegação.
     galleryImages = galleryAttr
       ? galleryAttr.split(',').map((src) => src.trim())
       : [img.getAttribute('src')]
@@ -89,26 +91,60 @@ function showMain(index) {
   currentIndex = index
   lightboxImg.src = galleryImages[index]
   resetZoom()
-  renderThumbs()
+  renderNav()
 }
 
-function renderThumbs() {
-  lightboxThumbs.innerHTML = ''
-  if (galleryImages.length <= 1) return
+function renderNav() {
+  const hasMultiple = galleryImages.length > 1
+  lightboxPrev.hidden = !hasMultiple
+  lightboxNext.hidden = !hasMultiple
+  lightboxPrev.disabled = currentIndex === 0
+  lightboxNext.disabled = currentIndex === galleryImages.length - 1
 
-  galleryImages.forEach((src, i) => {
-    if (i === currentIndex) return // a que já está em destaque não aparece na pilha
-    const thumb = document.createElement('div')
-    thumb.className = 'lightbox-thumb'
-    thumb.style.setProperty('--r', `${(i % 2 === 0 ? -1 : 1) * (4 + i * 2)}deg`)
-    thumb.innerHTML = `<img src="${src}" alt="" /><span class="thumb-arrow">→</span>`
-    thumb.addEventListener('click', (e) => {
+  lightboxDots.innerHTML = ''
+  if (!hasMultiple) return
+
+  galleryImages.forEach((_, i) => {
+    const dot = document.createElement('div')
+    dot.className = 'lightbox-dot' + (i === currentIndex ? ' is-active' : '')
+    dot.addEventListener('click', (e) => {
       e.stopPropagation()
       showMain(i)
     })
-    lightboxThumbs.appendChild(thumb)
+    lightboxDots.appendChild(dot)
   })
 }
+
+function goPrev(e) {
+  e.stopPropagation()
+  if (currentIndex > 0) showMain(currentIndex - 1)
+}
+function goNext(e) {
+  e.stopPropagation()
+  if (currentIndex < galleryImages.length - 1) showMain(currentIndex + 1)
+}
+lightboxPrev.addEventListener('click', goPrev)
+lightboxNext.addEventListener('click', goNext)
+
+// Setas do teclado, com o lightbox aberto
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('is-open')) return
+  if (e.key === 'ArrowLeft') goPrev(e)
+  if (e.key === 'ArrowRight') goNext(e)
+  if (e.key === 'Escape') closeLightbox()
+})
+
+// Arrastar o dedo (celular) também navega entre as fotos
+let touchStartX = 0
+lightboxImg.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].clientX
+})
+lightboxImg.addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - touchStartX
+  if (Math.abs(dx) < 40) return
+  if (dx < 0) goNext(e)
+  else goPrev(e)
+})
 
 let scale = 1
 let panX = 0
@@ -135,7 +171,7 @@ function resetZoom() {
 
 function closeLightbox() {
   lightbox.classList.remove('is-open')
-  lightboxThumbs.innerHTML = ''
+  lightboxDots.innerHTML = ''
   resetZoom()
 }
 lightboxClose.addEventListener('click', closeLightbox)

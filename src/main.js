@@ -4,7 +4,6 @@ document.getElementById('ano').textContent = new Date().getFullYear()
 const anoCanto = document.getElementById('ano-canto')
 if (anoCanto) anoCanto.textContent = new Date().getFullYear()
 
-// ---------- Menu mobile ----------
 const menuToggle = document.getElementById('menu-toggle')
 const menuMobile = document.getElementById('menu-mobile')
 
@@ -18,7 +17,6 @@ menuMobile.querySelectorAll('a').forEach((link) => {
   })
 })
 
-// ---------- Revelação suave ao rolar (fotos e textos com a classe .reveal) ----------
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -29,7 +27,6 @@ const revealObserver = new IntersectionObserver(
 )
 document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el))
 
-// ---------- Cascata de texto: Hero, Sobre, Portfólio e Contato usam a mesma lógica ----------
 const cascadeObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -40,7 +37,6 @@ const cascadeObserver = new IntersectionObserver(
 )
 document.querySelectorAll('.cascade-reveal').forEach((el) => cascadeObserver.observe(el))
 
-// ---------- Barra de progresso de leitura ----------
 const progressBar = document.getElementById('progress-bar')
 
 function updateProgressBar() {
@@ -63,23 +59,57 @@ function onScroll() {
 window.addEventListener('scroll', onScroll, { passive: true })
 updateProgressBar()
 
-// ---------- Lightbox: toca numa foto do portfólio e ela abre em tela cheia ----------
 const lightbox = document.getElementById('lightbox')
 const lightboxImg = document.getElementById('lightbox-img')
 const lightboxClose = document.getElementById('lightbox-close')
+const lightboxThumbs = document.getElementById('lightbox-thumbs')
 lightboxImg.draggable = false
+
+// Fotos do artista aberto no momento, e qual delas está em destaque
+let galleryImages = []
+let currentIndex = 0
 
 document.querySelectorAll('.portfolio-img').forEach((wrapper) => {
   wrapper.addEventListener('click', () => {
     const img = wrapper.querySelector('img')
-    lightboxImg.src = img.src
-    lightboxImg.alt = img.alt
+    const galleryAttr = wrapper.dataset.gallery
+    // Se o artista tem mais fotos (data-gallery), usa a lista toda.
+    // Senão, é só essa foto mesmo — sem miniaturas.
+    galleryImages = galleryAttr
+      ? galleryAttr.split(',').map((src) => src.trim())
+      : [img.getAttribute('src')]
+
+    const startIndex = galleryImages.indexOf(img.getAttribute('src'))
+    showMain(startIndex === -1 ? 0 : startIndex)
     lightbox.classList.add('is-open')
-    resetZoom()
   })
 })
 
-// Estado do zoom/pan: escala atual e o quanto a foto está deslocada
+function showMain(index) {
+  currentIndex = index
+  lightboxImg.src = galleryImages[index]
+  resetZoom()
+  renderThumbs()
+}
+
+function renderThumbs() {
+  lightboxThumbs.innerHTML = ''
+  if (galleryImages.length <= 1) return
+
+  galleryImages.forEach((src, i) => {
+    if (i === currentIndex) return // a que já está em destaque não aparece na pilha
+    const thumb = document.createElement('div')
+    thumb.className = 'lightbox-thumb'
+    thumb.style.setProperty('--r', `${(i % 2 === 0 ? -1 : 1) * (4 + i * 2)}deg`)
+    thumb.innerHTML = `<img src="${src}" alt="" /><span class="thumb-arrow">→</span>`
+    thumb.addEventListener('click', (e) => {
+      e.stopPropagation()
+      showMain(i)
+    })
+    lightboxThumbs.appendChild(thumb)
+  })
+}
+
 let scale = 1
 let panX = 0
 let panY = 0
@@ -105,6 +135,7 @@ function resetZoom() {
 
 function closeLightbox() {
   lightbox.classList.remove('is-open')
+  lightboxThumbs.innerHTML = ''
   resetZoom()
 }
 lightboxClose.addEventListener('click', closeLightbox)
@@ -112,13 +143,11 @@ lightbox.addEventListener('click', (e) => {
   if (e.target === lightbox) closeLightbox()
 })
 
-// Rodinha do mouse: zoom exatamente onde o cursor está, não no centro
 lightboxImg.addEventListener(
   'wheel',
   (e) => {
     e.preventDefault()
     const rect = lightboxImg.getBoundingClientRect()
-    // Posição do mouse dentro da foto, em porcentagem (0% a 100%)
     const originX = ((e.clientX - rect.left) / rect.width) * 100
     const originY = ((e.clientY - rect.top) / rect.height) * 100
     lightboxImg.style.transformOrigin = `${originX}% ${originY}%`
@@ -126,7 +155,6 @@ lightboxImg.addEventListener(
     const direction = e.deltaY < 0 ? 1 : -1
     scale = Math.min(Math.max(scale + direction * 0.25, 1), 4)
 
-    // Sem zoom, não faz sentido manter a foto deslocada
     if (scale === 1) {
       panX = 0
       panY = 0
@@ -136,7 +164,6 @@ lightboxImg.addEventListener(
   { passive: false }
 )
 
-// Clicar e arrastar: só funciona depois que já tem zoom aplicado
 lightboxImg.addEventListener('pointerdown', (e) => {
   if (scale <= 1) return
   isDragging = true
@@ -162,6 +189,5 @@ lightboxImg.addEventListener('pointermove', (e) => {
 lightboxImg.addEventListener('pointerup', (e) => {
   lightboxImg.classList.remove('is-dragging')
   isDragging = false
-  // Se o mouse não se moveu, foi um clique de verdade — reseta o zoom
   if (!pointerMoved) resetZoom()
 })

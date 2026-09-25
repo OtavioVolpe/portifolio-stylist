@@ -180,9 +180,12 @@ body {
   max-height: 85%;
   object-fit: contain;
   cursor: zoom-in;
-  transition: transform 0.15s ease-out, opacity 0.25s ease;
+  transition: transform 0.35s ease, opacity 0.35s ease;
   user-select: none;
   -webkit-user-drag: none;
+}
+#lightbox img.no-transition {
+  transition: none !important;
 }
 #lightbox img.is-zoomed {
   cursor: grab;

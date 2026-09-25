@@ -87,16 +87,41 @@ document.querySelectorAll('.portfolio-img').forEach((wrapper) => {
   })
 })
 
-function showMain(index) {
+let isAnimating = false
+
+function showMain(index, direction = 0) {
+  if (isAnimating) return
+  isAnimating = true
   currentIndex = index
   resetZoom()
 
-  // Crossfade suave: some a foto atual, troca por baixo, e ela reaparece
+  // direction > 0: indo pra próxima (sai pela esquerda, entra pela direita)
+  // direction < 0: voltando (sai pela direita, entra pela esquerda)
+  // direction === 0: sem direção (primeira abertura, ou clique numa bolinha) — só encolhe/cresce no lugar
+  const exitX = direction > 0 ? -50 : direction < 0 ? 50 : 0
+  const enterFromX = direction > 0 ? 50 : direction < 0 ? -50 : 0
+
+  // 1) a foto atual sai, encolhendo e indo pro lado
+  lightboxImg.style.transform = `translateX(${exitX}px) scale(0.85)`
   lightboxImg.style.opacity = '0'
-  window.setTimeout(() => {
-    lightboxImg.src = galleryImages[index]
-    lightboxImg.style.opacity = '1'
-  }, 200)
+
+  lightboxImg.addEventListener(
+    'transitionend',
+    function swap() {
+      // 2) troca a imagem e já a posiciona do lado oposto, sem transição (senão apareceria deslizando ao contrário)
+      lightboxImg.classList.add('no-transition')
+      lightboxImg.src = galleryImages[index]
+      lightboxImg.style.transform = `translateX(${enterFromX}px) scale(0.85)`
+      void lightboxImg.offsetWidth // força o navegador a "registrar" essa posição antes de animar
+      lightboxImg.classList.remove('no-transition')
+
+      // 3) a nova foto entra, crescendo até o tamanho normal
+      lightboxImg.style.transform = 'translateX(0) scale(1)'
+      lightboxImg.style.opacity = '1'
+      isAnimating = false
+    },
+    { once: true }
+  )
 
   renderNav()
 }
@@ -116,7 +141,7 @@ function renderNav() {
     dot.className = 'lightbox-dot' + (i === currentIndex ? ' is-active' : '')
     dot.addEventListener('click', (e) => {
       e.stopPropagation()
-      showMain(i)
+      showMain(i, i > currentIndex ? 1 : -1)
     })
     lightboxDots.appendChild(dot)
   })
@@ -124,11 +149,11 @@ function renderNav() {
 
 function goPrev(e) {
   e.stopPropagation()
-  if (currentIndex > 0) showMain(currentIndex - 1)
+  if (currentIndex > 0) showMain(currentIndex - 1, -1)
 }
 function goNext(e) {
   e.stopPropagation()
-  if (currentIndex < galleryImages.length - 1) showMain(currentIndex + 1)
+  if (currentIndex < galleryImages.length - 1) showMain(currentIndex + 1, 1)
 }
 lightboxPrev.addEventListener('click', goPrev)
 lightboxNext.addEventListener('click', goNext)

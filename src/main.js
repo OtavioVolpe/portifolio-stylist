@@ -89,8 +89,15 @@ document.querySelectorAll('.portfolio-img').forEach((wrapper) => {
 
 function showMain(index) {
   currentIndex = index
-  lightboxImg.src = galleryImages[index]
   resetZoom()
+
+  // Crossfade suave: some a foto atual, troca por baixo, e ela reaparece
+  lightboxImg.style.opacity = '0'
+  window.setTimeout(() => {
+    lightboxImg.src = galleryImages[index]
+    lightboxImg.style.opacity = '1'
+  }, 200)
+
   renderNav()
 }
 

@@ -84,6 +84,13 @@ document.querySelectorAll('.portfolio-img').forEach((wrapper) => {
     const startIndex = galleryImages.indexOf(img.getAttribute('src'))
     showMain(startIndex === -1 ? 0 : startIndex)
     lightbox.classList.add('is-open')
+
+    // Já baixa as outras fotos do artista em segundo plano,
+    // pra quando o usuário clicar em "próxima" ela já estar pronta
+    galleryImages.forEach((src) => {
+      const preload = new Image()
+      preload.src = src
+    })
   })
 })
 
@@ -112,13 +119,22 @@ function showMain(index, direction = 0) {
       lightboxImg.classList.add('no-transition')
       lightboxImg.src = galleryImages[index]
       lightboxImg.style.transform = `translateX(${enterFromX}px) scale(0.85)`
-      void lightboxImg.offsetWidth // força o navegador a "registrar" essa posição antes de animar
-      lightboxImg.classList.remove('no-transition')
 
-      // 3) a nova foto entra, crescendo até o tamanho normal
-      lightboxImg.style.transform = 'translateX(0) scale(1)'
-      lightboxImg.style.opacity = '1'
-      isAnimating = false
+      // 3) só revela quando a foto NOVA realmente carregou — sem isso, o navegador
+      //    continua mostrando a foto antiga por baixo até terminar de baixar a nova
+      const reveal = () => {
+        void lightboxImg.offsetWidth // força o navegador a "registrar" a posição antes de animar
+        lightboxImg.classList.remove('no-transition')
+        lightboxImg.style.transform = 'translateX(0) scale(1)'
+        lightboxImg.style.opacity = '1'
+        isAnimating = false
+      }
+
+      if (lightboxImg.complete) {
+        reveal()
+      } else {
+        lightboxImg.addEventListener('load', reveal, { once: true })
+      }
     },
     { once: true }
   )
